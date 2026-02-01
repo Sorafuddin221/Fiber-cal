@@ -1,0 +1,199 @@
+.container {
+  padding: 1.5rem;
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 1rem;
+}
+
+.modeSelector {
+  display: flex;
+  gap: 0.5rem;
+  background-color: hsl(var(--secondary));
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  margin-bottom: 1.5rem;
+}
+
+.modeButton, .modeButtonActive {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  flex: 1; /* Distribute space evenly */
+  text-align: center;
+}
+
+.modeButton {
+  background-color: transparent;
+  color: hsl(var(--secondary-foreground));
+}
+
+.modeButton:hover {
+  background-color: hsl(var(--accent)); /* Use opaque accent */
+  color: hsl(var(--accent-foreground)); /* Ensure readable text */
+}
+
+.modeButtonActive {
+  background-color: hsl(var(--primary)); /* Use primary color for active */
+  color: hsl(var(--primary-foreground)); /* Ensure readable text */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  padding: 0.5rem;
+  background-color: hsl(var(--input));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.step {
+  padding: 1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  background-color: hsl(var(--background));
+  margin-top: 1rem;
+}
+
+.stepTitle {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.buttonPrimary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  flex: 1;
+}
+
+.buttonPrimary:hover {
+  background-color: hsla(var(--primary), 0.8);
+}
+
+.buttonSecondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.buttonSecondary:hover {
+  background-color: hsla(var(--secondary), 0.8);
+}
+
+.buttonDestructive {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.buttonDestructive:hover {
+  background-color: hsla(var(--destructive), 0.8);
+}
+
+.buttonAccent {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  flex: 1;
+}
+
+.buttonAccent:hover {
+  background-color: hsla(var(--accent), 0.8);
+}
+
+.buttonGroup {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.tableContainer {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 100%;
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+  text-align: left;
+}
+
+.table th {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.table tbody tr:hover {
+  background-color: hsl(var(--accent));
+}
+
+.table tfoot tr {
+  font-weight: 700;
+  background-color: hsl(var(--secondary));
+}
+
+.table tfoot td {
+  color: hsl(var(--secondary-foreground));
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
