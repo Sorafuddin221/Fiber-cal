@@ -338,7 +338,7 @@ const GarmentsAnalysis: React.FC<Props> = ({ fiberSettings }) => {
         <button onClick={calculateOverallComposition} className={`${styles.button} ${styles.buttonPrimary}`}>
           Calculate Overall Average Composition
         </button>
-        {results.length > 0 && (
+        {sampleResults.length > 0 && (
           <button
             onClick={handleDownloadReport}
             className={`${styles.button} ${styles.buttonAccent}`}
