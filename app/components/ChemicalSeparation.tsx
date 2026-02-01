@@ -409,7 +409,7 @@ const ChemicalSeparation: React.FC<Props> = ({ fiberSettings, activeStandard }) 
       
       <div className={styles.buttonGroup}>
         <button onClick={mode === 'residue' ? calculateByResidue : calculateByComponent} className={`${styles.button} ${styles.buttonPrimary}`}>Calculate Average</button>
-        {results.length > 0 && <button onClick={handleDownloadReport} className={`${styles.button} ${styles.buttonAccent}`}>Download Report</button>}
+        {sampleResults.length > 0 && <button onClick={handleDownloadReport} className={`${styles.button} ${styles.buttonAccent}`}>Download Report</button>}
       </div>
 
       {sampleResults.length > 0 && (
