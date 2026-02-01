@@ -313,7 +313,7 @@ const ChemicalSeparation: React.FC<Props> = ({ fiberSettings, activeStandard }) 
 
   const handleDownloadReport = async () => {
     if (sampleResults.length > 0) {
-      const totalInitialWeight = initialWeight.reduce((sum, w) => sum + Number(w), 0);
+      const totalInitialWeight = initialWeight.map(w => Number(w)).reduce((sum, w) => sum + w, 0);
       const averageInitialWeight = totalInitialWeight / numberOfSamples;
 
       if (isNaN(averageInitialWeight) || averageInitialWeight <= 0) {
