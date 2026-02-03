@@ -11,10 +11,13 @@ const Settings: React.FC = () => {
     if (field === 'name') {
       updateFiber(id, field, value);
     } else {
-      // For number fields, allow empty string but store as number if valid
-      const numValue = value === '' ? '' : parseFloat(value);
-      if (value === '' || !isNaN(numValue)) {
-        updateFiber(id, field, numValue);
+      if (value === '') {
+        updateFiber(id, field, '');
+      } else {
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue)) {
+          updateFiber(id, field, numValue);
+        }
       }
     }
   };

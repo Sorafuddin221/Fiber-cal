@@ -32,7 +32,7 @@ export async function generateManualSeparationDoc(
   averageWithMoisture: ManualSeparationResult[],
   totalDryWeight: number
 ): Promise<Blob> {
-  const children = [
+  const children: (Paragraph | Table)[] = [
     new Paragraph({
       text: 'Manual Separation Analysis Report',
       heading: HeadingLevel.TITLE,
@@ -148,7 +148,7 @@ export async function generateChemicalSeparationDoc(
   averageWithMoisture: ChemicalSeparationResult[],
   initialWeight: number
 ): Promise<Blob> {
-  const children = [
+  const children: (Paragraph | Table)[] = [
     new Paragraph({
       text: 'Chemical Separation Analysis Report',
       heading: HeadingLevel.TITLE,
@@ -258,7 +258,7 @@ export async function generateGarmentsAnalysisDoc(
   sampleResults: GarmentsAnalysisResult[][],
   averageResults: GarmentsAnalysisResult[]
 ): Promise<Blob> {
-  const children = [
+  const children: (Paragraph | Table)[] = [
     new Paragraph({
       text: 'Garments Analysis Report',
       heading: HeadingLevel.TITLE,
