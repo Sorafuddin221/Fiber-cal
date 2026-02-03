@@ -66,7 +66,13 @@ export const useFiberSettings = () => {
     saveSettings([...fiberSettings, newFiber]);
   };
 
-  const updateFiber = (id: number, field: keyof Omit<FiberSetting, 'id'>, value: string | number) => {
+  type FiberSettingUpdatableFields = Omit<FiberSetting, 'id'>;
+
+  const updateFiber = <K extends keyof FiberSettingUpdatableFields>(
+    id: number,
+    field: K,
+    value: FiberSettingUpdatableFields[K]
+  ) => {
     const updatedSettings = fiberSettings.map((fiber) =>
       fiber.id === id ? { ...fiber, [field]: value } : fiber
     );
