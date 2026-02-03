@@ -137,34 +137,22 @@ const ChemicalSeparation: React.FC<Props> = ({ fiberSettings, activeStandard }) 
       const calculatedFibers: any[] = [];
       let previousWeightInSequence = sampleInitialWeight;
 
-      for (let j = 0; j < sampleSteps.length; j++) {
+      // For N fibers, the user provides N-1 residue weights. The Nth fiber's weight is the last residue.
+      // The loop calculates the weight of the N-1 dissolved fibers.
+      for (let j = 0; j < sampleSteps.length - 1; j++) {
         const currentStep = sampleSteps[j];
-        const currentResidueWeightInput = Number(currentStep.residueWeight);
+        const currentResidueWeight = Number(currentStep.residueWeight);
 
-        if (isNaN(currentResidueWeightInput)) {
-          alert(`Sample ${i + 1}, Step ${j + 1}: Invalid Weight.`);
+        if (isNaN(currentResidueWeight) || currentResidueWeight < 0) {
+          alert(`Sample ${i + 1}, Step ${j + 1}: Please enter a valid, non-negative Residue Weight.`);
           return;
         }
-        if (currentResidueWeightInput < 0) {
-          alert(`Sample ${i + 1}, Step ${j + 1}: Weight cannot be negative.`);
-          return;
-        }
-        if (currentResidueWeightInput > previousWeightInSequence && j < sampleSteps.length - 1) {
-          alert(`Sample ${i + 1}, Step ${j + 1}: Residue Weight cannot be greater than the previous weight.`);
+        if (currentResidueWeight > previousWeightInSequence) {
+          alert(`Sample ${i + 1}, Step ${j + 1}: Residue Weight (${currentResidueWeight}g) cannot be greater than the previous residue weight (${previousWeightInSequence.toFixed(4)}g).`);
           return;
         }
         
-        let fiberDryWeight;
-        if (j < sampleSteps.length - 1) {
-          fiberDryWeight = previousWeightInSequence - currentResidueWeightInput;
-        } else {
-          fiberDryWeight = currentResidueWeightInput;
-        }
-
-        if (fiberDryWeight < 0) {
-          alert(`Sample ${i + 1}, Step ${j + 1}: Calculated dry weight is negative. Check your inputs.`);
-          return;
-        }
+        const fiberDryWeight = previousWeightInSequence - currentResidueWeight;
 
         calculatedFibers.push({
             name: currentStep.dissolvedFiberName || `Fiber from Step ${j + 1}`,
@@ -172,7 +160,18 @@ const ChemicalSeparation: React.FC<Props> = ({ fiberSettings, activeStandard }) 
             moistureRegain: Number(currentStep.dissolvedFiberMoisture)
         });
         
-        previousWeightInSequence = currentResidueWeightInput;
+        previousWeightInSequence = currentResidueWeight;
+      }
+
+      // The last "step" in the UI is just a container for the name of the final fiber.
+      // Its weight is the last residue calculated from the loop above.
+      if (sampleSteps.length > 0) {
+        const lastFiberStep = sampleSteps[sampleSteps.length - 1];
+        calculatedFibers.push({
+          name: lastFiberStep.dissolvedFiberName || 'Final Residue',
+          dryWeight: previousWeightInSequence,
+          moistureRegain: Number(lastFiberStep.dissolvedFiberMoisture)
+        });
       }
 
       let totalConditionedWeight = 0;
@@ -378,7 +377,7 @@ const ChemicalSeparation: React.FC<Props> = ({ fiberSettings, activeStandard }) 
                   <h4 className={styles.stepTitle}>Step {index + 1}</h4>
                   <div className={styles.grid}>
                     <input type="text" list={fiberDatalistId} placeholder="Dissolved Fiber Name" value={step.dissolvedFiberName} onChange={(e) => handleStepChange(sampleIndex, step.id, 'dissolvedFiberName', e.target.value)} className={styles.input} />
-                    <input type="number" placeholder={index < steps[sampleIndex].length - 1 ? "Residue Weight (g)" : "Dry Weight of Last Fiber (g)"} value={step.residueWeight} onChange={(e) => handleStepChange(sampleIndex, step.id, 'residueWeight', e.target.value === '' ? '' : Number(e.target.value))} className={styles.input} />
+                    <input type="number" placeholder={index < steps[sampleIndex].length - 1 ? "Residue Weight (g)" : "Weight is Calculated"} value={step.residueWeight} onChange={(e) => handleStepChange(sampleIndex, step.id, 'residueWeight', e.target.value === '' ? '' : Number(e.target.value))} className={styles.input} disabled={index === steps[sampleIndex].length - 1} />
                     <input type="number" placeholder={`Moisture Regain (%)`} value={step.dissolvedFiberMoisture} onChange={(e) => handleStepChange(sampleIndex, step.id, 'dissolvedFiberMoisture', e.target.value === '' ? '' : Number(e.target.value))} className={styles.input} />
                   </div>
                   {steps[sampleIndex].length > 1 && <button onClick={() => removeStep(sampleIndex, step.id)} className={`${styles.button} ${styles.buttonDestructive}`}>Remove Step</button>}
